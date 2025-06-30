@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useAuth } from "@/contexts/AuthContext"
 import { ProfileSetup } from "./ProfileSetup"
@@ -27,12 +27,22 @@ import { AppSidebar } from "./AppSidebar"
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import { FeedbackPage } from "./FeedbackPage"
+import { supabase } from "@/lib/supabaseClient"
+import type { User as SupabaseUser } from "@supabase/supabase-js"
 
 export function Dashboard() {
-  const { user } = useAuth()
+  const [user, setUser] = useState<SupabaseUser | null>(null)
   const [activeTab, setActiveTab] = useState("overview")
   const { applications, matchedJobsToday } = useApp()
   const { isOnboardingComplete } = useOnboarding()
+
+  useEffect(() => {
+    async function fetchUser() {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+    }
+    fetchUser()
+  }, [])
 
   const getPageTitle = () => {
     switch (activeTab) {
@@ -162,7 +172,7 @@ export function Dashboard() {
             <Separator orientation="vertical" className="mr-2 h-4" />
             <div className="flex items-center">
               <span className="text-lg font-medium text-muted-foreground">
-                Welcome back, {user?.name || user?.email?.split("@")[0]}! 👋
+                Welcome back, {user?.user_metadata.name || user?.email?.split("@")[0]}! 👋 
               </span>
             </div>
             <div className="ml-auto flex items-center space-x-3">

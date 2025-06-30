@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useAuth } from "@/contexts/AuthContext"
 import { useToast } from "@/hooks/use-toast"
 import { Loader2 } from "lucide-react"
+import { supabase } from '../lib/supabaseClient'
 
 export function AuthPage() {
   const [loginData, setLoginData] = useState({ email: "", password: "" })
@@ -18,13 +19,13 @@ export function AuthPage() {
   const { login, signup, loading } = useAuth()
   const { toast } = useToast()
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const success = await login(loginData.email, loginData.password)
-    if (success) {
-      toast({ title: "Welcome back!", description: "You have been logged in successfully." })
+  async function handleLogin(email: string, password: string) {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+  
+    if (error) {
+      console.error('Login error:', error.message)
     } else {
-      toast({ title: "Login failed", description: "Invalid email or password.", variant: "destructive" })
+      console.log('User:', data.user)
     }
   }
 
