@@ -1,15 +1,16 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
-import { useApp } from "@/contexts/AppContext"
-import { useToast } from "@/hooks/use-toast"
+import { Button } from "../components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
+import { Input } from "../components/ui/input"
+import { Label } from "../components/ui/label"
+import { Textarea } from "../components/ui/textarea"
+import { Badge } from "../components/ui/badge"
+import { useApp } from "../contexts/AppContext"
+import { useToast } from "../hooks/use-toast"
 import { Plus, X, Save } from "lucide-react"
+import { supabase } from "@/lib/supabaseClient"
 
 export function ProfileSetup() {
   const { profile, updateProfile } = useApp()
@@ -17,9 +18,35 @@ export function ProfileSetup() {
   const [newSkill, setNewSkill] = useState("")
   const [newLanguage, setNewLanguage] = useState("")
 
-  const handleSave = () => {
+  const handleSave = async () => {
     updateProfile(profile)
-    toast({ title: "Profile saved successfully!" })
+    // TODO: Pass information to the backend to update the user's profile and populate the database
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session) {
+      console.error("No user session found")
+      toast({ title: "Error: Not logged in. Please reload the page.", variant: "destructive" })
+      return
+    }
+
+    const res = await fetch('/server/save_profile', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify(profile),
+    })
+
+    //TODO: Add a processing animation until confirmation is received from the backend that the data has been saved
+
+    if (!res.ok) {
+      toast({ title: "Failed to save profile. Please try again.", variant: "destructive" })
+      console.error(await res.text())
+      return
+    } else {
+      toast({ title: "Profile saved successfully!" })
+    }
   }
 
   const addSkill = () => {
@@ -37,6 +64,7 @@ export function ProfileSetup() {
     if (newLanguage.trim() && !profile.languages.includes(newLanguage.trim())) {
       updateProfile({ languages: [...profile.languages, newLanguage.trim()] })
       setNewLanguage("")
+      // TODO: Add gentle reminder to remember to save the profile
     }
   }
 
