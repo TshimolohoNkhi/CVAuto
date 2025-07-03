@@ -4,6 +4,7 @@ from utils.supabase_client import supabase
 from utils.encryption import encrypt_data
 import jwt
 import os
+import json
 
 app = FastAPI()
 security = HTTPBearer()
@@ -25,13 +26,21 @@ async def save_profile(request: Request, token_data=Depends(verify_token)):
     data = await request.json()
     user_id = token_data["sub"]
 
-    # Encrypt each field
     encrypted_profile = {
-        "id": user_id,  # Must match auth.users.id
-        "full_name": encrypt_data(data.get("full_name", "")),
-        "headline": encrypt_data(data.get("headline", "")),
-        "location": encrypt_data(data.get("location", "")),
-        "bio": encrypt_data(data.get("bio", "")),
+        "id": user_id,
+        "fullName": encrypt_data(data.get("fullName", "")),
+        "email": encrypt_data(data.get("email", "")),
+        "phone": encrypt_data(data.get("phone", "")),
+        "city": encrypt_data(data.get("city", "")),
+        "province": encrypt_data(data.get("province", "")),
+        "postalCode": encrypt_data(data.get("postalCode", "")),
+        "address": encrypt_data(data.get("address", "")),
+
+        # Serialize arrays/objects as JSON before encryption
+        "skills": encrypt_data(json.dumps(data.get("skills", []))),
+        "languages": encrypt_data(json.dumps(data.get("languages", []))),
+        "education": encrypt_data(json.dumps(data.get("education", []))),
+        "workExperience": encrypt_data(json.dumps(data.get("workExperience", []))),
     }
 
     # Insert into Supabase

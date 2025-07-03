@@ -10,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { useApp } from "@/contexts/AppContext"
 import { useToast } from "@/hooks/use-toast"
 import { Save } from "lucide-react"
+import { supabase } from "@/lib/supabaseClient"
 
 const SA_LOCATIONS = [
   "Cape Town",
@@ -78,9 +79,33 @@ export function PreferencesForm() {
   const { preferences, updatePreferences } = useApp()
   const { toast } = useToast()
 
-  const handleSave = () => {
+  const handleSave = async () => {
     updatePreferences(preferences)
-    toast({ title: "Preferences saved successfully!" })
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (!session) {
+      console.error("No user session found")
+      toast({ title: "Error: Not logged in. Please reload page.", variant: "destructive" })
+      return
+    }
+
+    const res = await fetch('/server/save_preferences', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+         Authorization: `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify(preferences),
+    })
+
+
+    if (!res.ok) {
+      toast({ title: "Failed to save preferences. Please try again.", variant: "destructive" })
+      console.error(await res.text())
+      return
+    } else {
+      toast({ title: "Preferences saved successfully!" })
+    }
   }
 
   const toggleArrayItem = (array: string[], item: string) => {
