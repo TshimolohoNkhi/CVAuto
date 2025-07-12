@@ -81,7 +81,7 @@ export function AppSidebar({ activeTab, onTabChange }: AppSidebarProps) {
     },
     {
       id: "donate",
-      title: "Support CVAuto",
+      title: "Support Coverly",
       icon: Heart,
       badge: totalDonated > 0 ? "💙" : null,
     },
@@ -96,7 +96,7 @@ export function AppSidebar({ activeTab, onTabChange }: AppSidebarProps) {
           </div>
           <div>
             <h2 className="text-lg font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-              CVAuto
+              Coverly
             </h2>
             <p className="text-xs text-muted-foreground">Job Search Assistant</p>
           </div>

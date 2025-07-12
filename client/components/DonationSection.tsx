@@ -43,9 +43,9 @@ export function DonationSection() {
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold flex items-center justify-center gap-2">
           <Heart className="h-6 w-6 text-red-500" />
-          Support CVAuto
+          Support Coverly
         </h2>
-        <p className="text-gray-600">Help us keep CVAuto free and improve job opportunities for South Africans</p>
+        <p className="text-gray-600">Help us keep Coverly free and improve job opportunities for South Africans</p>
       </div>
 
       {/* Monthly Goal Progress */}
@@ -97,7 +97,7 @@ export function DonationSection() {
           <CardContent>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-600">R{totalDonated.toLocaleString()}</div>
-              <p className="text-sm text-green-700">Thank you for supporting CVAuto! 🙏</p>
+              <p className="text-sm text-green-700">Thank you for supporting Coverly! 🙏</p>
             </div>
           </CardContent>
         </Card>
@@ -142,7 +142,7 @@ export function DonationSection() {
           </CardHeader>
           <CardContent>
             <p className="text-xs text-gray-600">
-              Keep CVAuto completely free for all South African job seekers, regardless of their financial situation.
+              Keep Coverly completely free for all South African job seekers, regardless of their financial situation.
             </p>
           </CardContent>
         </Card>
@@ -178,7 +178,7 @@ export function DonationSection() {
               <Heart className="h-8 w-8 text-red-500 mx-auto" />
               <h4 className="font-medium">Champion</h4>
               <div className="text-lg font-bold">R1000+</div>
-              <p className="text-xs text-gray-600">Become a CVAuto champion!</p>
+              <p className="text-xs text-gray-600">Become a Coverly champion!</p>
             </div>
           </div>
         </CardContent>
@@ -188,7 +188,7 @@ export function DonationSection() {
       <Card className="bg-gradient-to-r from-pink-50 to-red-50 dark:from-pink-950/20 dark:to-red-950/20 border-pink-200">
         <CardContent className="text-center py-8">
           <Heart className="h-12 w-12 text-red-500 mx-auto mb-4" />
-          <h3 className="text-xl font-bold mb-2">Ready to Support CVAuto?</h3>
+          <h3 className="text-xl font-bold mb-2">Ready to Support Coverly?</h3>
           <p className="text-gray-600 mb-6">
             Every donation, no matter the size, helps us continue providing free job search automation to South
             Africans.
@@ -221,7 +221,7 @@ export function DonationSection() {
         </CardHeader>
         <CardContent>
           <div className="text-xs text-gray-600 space-y-2">
-            <p>• 100% of donations go towards CVAuto development and maintenance</p>
+            <p>• 100% of donations go towards Coverly development and maintenance</p>
             <p>• Monthly financial reports available on our GitHub</p>
             <p>• Open source project - you can see exactly how we use funds</p>
             <p>• Based in South Africa, supporting local job seekers</p>
@@ -250,7 +250,7 @@ function PaymentModal({ onClose }: { onClose: () => void }) {
     addDonation(amount)
     addNotification({
       title: "Thank you for your donation! 🎉",
-      message: `Your R${amount} donation helps keep CVAuto free for everyone.`,
+      message: `Your R${amount} donation helps keep Coverly free for everyone.`,
       type: "success",
     })
 
@@ -278,7 +278,7 @@ function PaymentModal({ onClose }: { onClose: () => void }) {
             <div>
               <CardTitle className="flex items-center gap-2">
                 <Heart className="h-5 w-5 text-red-500" />
-                Support CVAuto
+                Support Coverly
               </CardTitle>
               <CardDescription>Choose your donation amount</CardDescription>
             </div>
@@ -386,7 +386,7 @@ function PaymentModal({ onClose }: { onClose: () => void }) {
 
           <div className="text-center text-xs text-gray-500 space-y-1">
             <p>🔒 Secure payment processing</p>
-            <p>All donations go towards keeping CVAuto free and improving the service</p>
+            <p>All donations go towards keeping Coverly free and improving the service</p>
             <p>🇿🇦 Supporting South African job seekers</p>
           </div>
         </CardContent>
@@ -440,7 +440,7 @@ function AppreciationModal({ onClose }: { onClose: () => void }) {
             <div className="text-center p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 rounded-lg">
               <p className="text-sm text-gray-600">
                 Can't donate right now? No problem! Your appreciation and kind words are incredibly valuable to our team
-                and help us stay motivated to keep CVAuto free for everyone.
+                and help us stay motivated to keep Coverly free for everyone.
               </p>
             </div>
 
@@ -458,7 +458,7 @@ function AppreciationModal({ onClose }: { onClose: () => void }) {
               <Label htmlFor="appreciation-message">Your Message</Label>
               <Textarea
                 id="appreciation-message"
-                placeholder="Share how CVAuto has helped you, what you appreciate about the service, or just say hello! Every word of encouragement helps our team stay motivated."
+                placeholder="Share how Coverly has helped you, what you appreciate about the service, or just say hello! Every word of encouragement helps our team stay motivated."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 rows={5}
@@ -469,11 +469,11 @@ function AppreciationModal({ onClose }: { onClose: () => void }) {
             <div className="bg-yellow-50 dark:bg-yellow-950/20 p-3 rounded-lg">
               <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-1">💡 Ideas for your message:</h4>
               <ul className="text-xs text-yellow-700 dark:text-yellow-300 space-y-1">
-                <li>• How CVAuto has helped your job search</li>
+                <li>• How Coverly has helped your job search</li>
                 <li>• Features you love most</li>
                 <li>• How it's made your life easier</li>
                 <li>• Encouragement for our team</li>
-                <li>• What CVAuto means to you</li>
+                <li>• What Coverly means to you</li>
               </ul>
             </div>
 
@@ -498,7 +498,7 @@ function AppreciationModal({ onClose }: { onClose: () => void }) {
             </div>
 
             <div className="text-center text-xs text-gray-500">
-              <p>💙 Your words of encouragement help us keep CVAuto free</p>
+              <p>💙 Your words of encouragement help us keep Coverly free</p>
               <p>🇿🇦 Thank you for being part of our South African community</p>
             </div>
           </form>

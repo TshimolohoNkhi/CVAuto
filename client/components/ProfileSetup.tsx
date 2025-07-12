@@ -10,7 +10,7 @@ import { Badge } from "../components/ui/badge"
 import { useApp } from "../contexts/AppContext"
 import { useToast } from "../hooks/use-toast"
 import { Plus, X, Save } from "lucide-react"
-import { supabase } from "@/lib/supabaseClient"
+import { supabase } from "@/lib/supabase"
 
 export function ProfileSetup() {
   const { profile, updateProfile } = useApp()

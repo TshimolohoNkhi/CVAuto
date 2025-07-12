@@ -27,7 +27,7 @@ import { AppSidebar } from "./AppSidebar"
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import { FeedbackPage } from "./FeedbackPage"
-import { supabase } from "@/lib/supabaseClient"
+import { supabase } from "@/lib/supabase"
 import type { User as SupabaseUser } from "@supabase/supabase-js"
 
 export function Dashboard() {
@@ -59,7 +59,7 @@ export function Dashboard() {
       case "history":
         return "Analytics & History"
       case "donate":
-        return "Support CVAuto"
+        return "Support Coverly"
       case "feedback":
         return "Feedback & Support"
       default:

@@ -23,7 +23,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     if (user) {
-      const onboardingStatus = localStorage.getItem(`cvauto_onboarding_${user.id}`)
+      const onboardingStatus = localStorage.getItem(`coverly_onboarding_${user.id}`)
       if (!onboardingStatus) {
         setIsOnboardingComplete(false)
         setCurrentStep(1)
@@ -33,14 +33,14 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
 
   const completeOnboarding = () => {
     if (user) {
-      localStorage.setItem(`cvauto_onboarding_${user.id}`, "completed")
+      localStorage.setItem(`coverly_onboarding_${user.id}`, "completed")
       setIsOnboardingComplete(true)
     }
   }
 
   const skipOnboarding = () => {
     if (user) {
-      localStorage.setItem(`cvauto_onboarding_${user.id}`, "skipped")
+      localStorage.setItem(`coverly_onboarding_${user.id}`, "skipped")
       setIsOnboardingComplete(true)
     }
   }

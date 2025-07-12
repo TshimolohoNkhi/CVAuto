@@ -23,7 +23,7 @@ import {
 const onboardingSteps = [
   {
     id: 1,
-    title: "Welcome to CVAuto! 🎉",
+    title: "Welcome to Coverly! 🎉",
     description: "Let's get you set up to find your dream job in South Africa",
     icon: Sparkles,
     content: (
@@ -31,9 +31,9 @@ const onboardingSteps = [
         <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto">
           <Sparkles className="h-10 w-10 text-white" />
         </div>
-        <h3 className="text-xl font-semibold">Welcome to CVAuto!</h3>
+        <h3 className="text-xl font-semibold">Welcome to Coverly!</h3>
         <p className="text-gray-600">
-          CVAuto is your automated job application assistant. We'll help you find and apply to relevant jobs across
+          Coverly is your automated job application assistant. We'll help you find and apply to relevant jobs across
           South Africa while you focus on preparing for interviews.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
@@ -164,7 +164,7 @@ const onboardingSteps = [
         </div>
         <h3 className="text-xl font-semibold">Congratulations! 🎉</h3>
         <p className="text-gray-600">
-          You're now ready to start your automated job search. CVAuto will begin finding and applying to relevant
+          You're now ready to start your automated job search. Coverly will begin finding and applying to relevant
           positions based on your preferences.
         </p>
         <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 p-4 rounded-lg">
@@ -211,7 +211,7 @@ export function OnboardingFlow() {
 
     completeOnboarding()
     addNotification({
-      title: "Welcome to CVAuto! 🎉",
+      title: "Welcome to Coverly! 🎉",
       message: "Your account is set up and ready. We'll start finding job opportunities for you.",
       type: "success",
     })

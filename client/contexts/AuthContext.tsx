@@ -1,7 +1,8 @@
 "use client"
 
-import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
+import { supabase } from "@/lib/supabase"
+import type React from "react"
 
 interface User {
   id: string
@@ -24,73 +25,69 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Check for existing user in localStorage
-    const savedUser = localStorage.getItem("cvauto_user")
-    if (savedUser) {
-      setUser(JSON.parse(savedUser))
+    const getSession = async () => {
+      const { data } = await supabase.auth.getSession()
+      if (data.session?.user) {
+        const { id, email } = data.session.user
+        setUser({ id, email: email! })
+      }
+      setLoading(false)
     }
-    setLoading(false)
+
+    getSession()
+
+    // Listen for auth state changes
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser({ id: session.user.id, email: session.user.email! })
+      } else {
+        setUser(null)
+      }
+    })
+
+    return () => {
+      listener?.subscription.unsubscribe()
+    }
   }, [])
 
   const login = async (email: string, password: string): Promise<boolean> => {
     setLoading(true)
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    // Check if user exists in localStorage
-    const users = JSON.parse(localStorage.getItem("cvauto_users") || "[]")
-    const existingUser = users.find((u: any) => u.email === email && u.password === password)
-
-    if (existingUser) {
-      const userData = { id: existingUser.id, email: existingUser.email, name: existingUser.name }
-      setUser(userData)
-      localStorage.setItem("cvauto_user", JSON.stringify(userData))
-      setLoading(false)
-      return true
-    }
-
-    setLoading(false)
-    return false
-  }
-
-  const signup = async (email: string, password: string, name: string): Promise<boolean> => {
-    setLoading(true)
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    // Check if user already exists
-    const users = JSON.parse(localStorage.getItem("cvauto_users") || "[]")
-    const existingUser = users.find((u: any) => u.email === email)
-
-    if (existingUser) {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+  
+    if (error || !data.session) {
       setLoading(false)
       return false
     }
-
-    // Create new user
-    const newUser = {
-      id: Date.now().toString(),
-      email,
-      password,
-      name,
-    }
-
-    users.push(newUser)
-    localStorage.setItem("cvauto_users", JSON.stringify(users))
-
-    const userData = { id: newUser.id, email: newUser.email, name: newUser.name }
-    setUser(userData)
-    localStorage.setItem("cvauto_user", JSON.stringify(userData))
-
+  
+    const { user } = data
+    setUser({ id: user.id, email: user.email! })
+    localStorage.setItem("coverly_user", JSON.stringify({ id: user.id, email: user.email }))
     setLoading(false)
     return true
   }
 
-  const logout = () => {
+  const signup = async (email: string, password: string, name: string): Promise<boolean> => {
+    setLoading(true)
+    const { data, error } = await supabase.auth.signUp({ email, password })
+  
+    if (error || !data.user) {
+      setLoading(false)
+      return false
+    }
+  
+    // Save name to your `profiles` table
+    await supabase.from("profiles").insert([{ id: data.user.id, fullname: name }])
+  
+    setUser({ id: data.user.id, email: data.user.email!, name })
+    localStorage.setItem("coverly_user", JSON.stringify({ id: data.user.id, email: data.user.email, name }))
+    setLoading(false)
+    return true
+  }
+
+  const logout = async () => {
+    await supabase.auth.signOut()
     setUser(null)
-    localStorage.removeItem("cvauto_user")
+    localStorage.removeItem("coverly_user")
   }
 
   return <AuthContext.Provider value={{ user, login, signup, logout, loading }}>{children}</AuthContext.Provider>

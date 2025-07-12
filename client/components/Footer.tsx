@@ -18,7 +18,7 @@ export function Footer() {
                 <span className="text-white font-bold text-sm">CV</span>
               </div>
               <h3 className="ml-2 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                CVAuto
+                Coverly
               </h3>
             </div>
             <p className="text-gray-600 text-sm">
@@ -127,7 +127,7 @@ export function Footer() {
 
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="flex items-center text-sm text-gray-600">
-            <span>© {currentYear} CVAuto. Made with</span>
+            <span>© {currentYear} Coverly. Made with</span>
             <Heart className="h-4 w-4 mx-1 text-red-500 fill-current" />
             <span>in South Africa</span>
           </div>

@@ -10,7 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { useApp } from "@/contexts/AppContext"
 import { useToast } from "@/hooks/use-toast"
 import { Save } from "lucide-react"
-import { supabase } from "@/lib/supabaseClient"
+import { supabase } from "@/lib/supabase"
 
 const SA_LOCATIONS = [
   "Cape Town",

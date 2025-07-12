@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useAuth } from "@/contexts/AuthContext"
 import { useToast } from "@/hooks/use-toast"
 import { Loader2 } from "lucide-react"
-import { supabase } from '../lib/supabaseClient'
+import { supabase } from '../lib/supabase'
 
 export function AuthPage() {
   const [loginData, setLoginData] = useState({ email: "", password: "" })
@@ -37,7 +37,7 @@ export function AuthPage() {
     }
     const success = await signup(signupData.email, signupData.password, signupData.name)
     if (success) {
-      toast({ title: "Account created!", description: "Welcome to CVAuto!" })
+      toast({ title: "Account created!", description: "Welcome to Coverly!" })
     } else {
       toast({ title: "Signup failed", description: "Email already exists.", variant: "destructive" })
     }
@@ -47,7 +47,7 @@ export function AuthPage() {
     <div className="light min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">CVAuto</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Coverly</h1>
           <p className="text-gray-600">Automated Job Application Assistant for South Africa</p>
         </div>
 
@@ -113,7 +113,7 @@ export function AuthPage() {
             <Card className="bg-white border-gray-200">
               <CardHeader>
                 <CardTitle className="text-gray-900">Sign Up</CardTitle>
-                <CardDescription className="text-gray-600">Create your CVAuto account</CardDescription>
+                <CardDescription className="text-gray-600">Create your Coverly account</CardDescription>
               </CardHeader>
               <form onSubmit={handleSignup}>
                 <CardContent className="space-y-4">

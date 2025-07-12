@@ -23,8 +23,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Load saved theme and accent color
-    const savedTheme = localStorage.getItem("cvauto_theme") as Theme
-    const savedAccentColor = localStorage.getItem("cvauto_accent_color") as AccentColor
+    const savedTheme = localStorage.getItem("coverly_theme") as Theme
+    const savedAccentColor = localStorage.getItem("coverly_accent_color") as AccentColor
 
     if (savedTheme) setTheme(savedTheme)
     if (savedAccentColor) setAccentColor(savedAccentColor)
@@ -50,8 +50,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     root.style.setProperty("--accent-color", getAccentColorValue(accentColor))
 
     // Save to localStorage
-    localStorage.setItem("cvauto_theme", theme)
-    localStorage.setItem("cvauto_accent_color", accentColor)
+    localStorage.setItem("coverly_theme", theme)
+    localStorage.setItem("coverly_accent_color", accentColor)
   }, [theme, accentColor])
 
   const getAccentColorValue = (color: AccentColor) => {

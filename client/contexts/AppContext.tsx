@@ -122,11 +122,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (user) {
       // Load user data from localStorage
-      const savedProfile = localStorage.getItem(`cvauto_profile_${user.id}`)
-      const savedPreferences = localStorage.getItem(`cvauto_preferences_${user.id}`)
-      const savedApplications = localStorage.getItem(`cvauto_applications_${user.id}`)
-      const savedCvTemplate = localStorage.getItem(`cvauto_cv_template_${user.id}`)
-      const savedStats = localStorage.getItem(`cvauto_stats_${user.id}`)
+      const savedProfile = localStorage.getItem(`coverly_profile_${user.id}`)
+      const savedPreferences = localStorage.getItem(`coverly_preferences_${user.id}`)
+      const savedApplications = localStorage.getItem(`coverly_applications_${user.id}`)
+      const savedCvTemplate = localStorage.getItem(`coverly_cv_template_${user.id}`)
+      const savedStats = localStorage.getItem(`coverly_stats_${user.id}`)
 
       if (savedProfile) {
         setProfile(JSON.parse(savedProfile))
@@ -158,14 +158,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     if (!user) return
     const newProfile = { ...profile, ...updates }
     setProfile(newProfile)
-    localStorage.setItem(`cvauto_profile_${user.id}`, JSON.stringify(newProfile))
+    localStorage.setItem(`coverly_profile_${user.id}`, JSON.stringify(newProfile))
   }
 
   const updatePreferences = (updates: Partial<UserPreferences>) => {
     if (!user) return
     const newPreferences = { ...preferences, ...updates }
     setPreferences(newPreferences)
-    localStorage.setItem(`cvauto_preferences_${user.id}`, JSON.stringify(newPreferences))
+    localStorage.setItem(`coverly_preferences_${user.id}`, JSON.stringify(newPreferences))
   }
 
   const addApplication = (application: Omit<JobApplication, "id">) => {
@@ -173,20 +173,20 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const newApplication = { ...application, id: Date.now().toString() }
     const newApplications = [...applications, newApplication]
     setApplications(newApplications)
-    localStorage.setItem(`cvauto_applications_${user.id}`, JSON.stringify(newApplications))
+    localStorage.setItem(`coverly_applications_${user.id}`, JSON.stringify(newApplications))
   }
 
   const updateApplication = (id: string, updates: Partial<JobApplication>) => {
     if (!user) return
     const newApplications = applications.map((app) => (app.id === id ? { ...app, ...updates } : app))
     setApplications(newApplications)
-    localStorage.setItem(`cvauto_applications_${user.id}`, JSON.stringify(newApplications))
+    localStorage.setItem(`coverly_applications_${user.id}`, JSON.stringify(newApplications))
   }
 
   const setCvTemplate = (template: string) => {
     if (!user) return
     setCvTemplateState(template)
-    localStorage.setItem(`cvauto_cv_template_${user.id}`, template)
+    localStorage.setItem(`coverly_cv_template_${user.id}`, template)
   }
 
   const exportData = () => {
@@ -202,7 +202,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const url = URL.createObjectURL(blob)
     const a = document.createElement("a")
     a.href = url
-    a.download = `cvauto-data-${user.id}-${new Date().toISOString().split("T")[0]}.json`
+    a.download = `coverly-data-${user.id}-${new Date().toISOString().split("T")[0]}.json`
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
@@ -227,7 +227,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       matchedJobsToday: matchedJobsToday + newMatched,
       lastScrape: new Date().toISOString(),
     }
-    localStorage.setItem(`cvauto_stats_${user.id}`, JSON.stringify(stats))
+    localStorage.setItem(`coverly_stats_${user.id}`, JSON.stringify(stats))
 
     // Add some mock applications
     const mockJobs = [

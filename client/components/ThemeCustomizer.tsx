@@ -24,7 +24,7 @@ export function ThemeCustomizer() {
           <Palette className="h-5 w-5" />
           Theme Customization
         </CardTitle>
-        <CardDescription>Personalize your CVAuto experience</CardDescription>
+        <CardDescription>Personalize your Coverly experience</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">

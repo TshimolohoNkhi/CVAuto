@@ -40,7 +40,7 @@ export function FeedbackPage() {
 
     toast({
       title: "Feedback submitted! 🎉",
-      description: "Thank you for helping us improve CVAuto. We'll review your feedback soon.",
+      description: "Thank you for helping us improve Coverly. We'll review your feedback soon.",
     })
 
     addNotification({
@@ -73,7 +73,7 @@ export function FeedbackPage() {
           <MessageSquare className="h-6 w-6 text-blue-500" />
           Feedback & Support
         </h2>
-        <p className="text-gray-600">Help us improve CVAuto by reporting issues or suggesting new features</p>
+        <p className="text-gray-600">Help us improve Coverly by reporting issues or suggesting new features</p>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
@@ -83,7 +83,7 @@ export function FeedbackPage() {
             <CardHeader>
               <CardTitle>Submit Feedback</CardTitle>
               <CardDescription>
-                Your feedback helps us make CVAuto better for all South African job seekers
+                Your feedback helps us make Coverly better for all South African job seekers
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -230,15 +230,15 @@ export function FeedbackPage() {
               <div className="text-xs space-y-2">
                 <div>
                   <p className="font-medium">Email Support</p>
-                  <p className="text-gray-600">support@cvauto.co.za</p>
+                  <p className="text-gray-600">support@coverly.co.za</p>
                 </div>
                 <div>
                   <p className="font-medium">GitHub Issues</p>
-                  <p className="text-gray-600">github.com/cvauto/issues</p>
+                  <p className="text-gray-600">github.com/coverly/issues</p>
                 </div>
                 <div>
                   <p className="font-medium">Community Discord</p>
-                  <p className="text-gray-600">discord.gg/cvauto</p>
+                  <p className="text-gray-600">discord.gg/coverly</p>
                 </div>
               </div>
             </CardContent>

@@ -35,7 +35,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     if (user) {
-      const savedNotifications = localStorage.getItem(`cvauto_notifications_${user.id}`)
+      const savedNotifications = localStorage.getItem(`coverly_notifications_${user.id}`)
       if (savedNotifications) {
         setNotifications(JSON.parse(savedNotifications))
       }
@@ -44,7 +44,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
 
   const saveNotifications = (newNotifications: Notification[]) => {
     if (user) {
-      localStorage.setItem(`cvauto_notifications_${user.id}`, JSON.stringify(newNotifications))
+      localStorage.setItem(`coverly_notifications_${user.id}`, JSON.stringify(newNotifications))
     }
   }
 

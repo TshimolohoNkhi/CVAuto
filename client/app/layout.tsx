@@ -13,7 +13,7 @@ import { DonationProvider } from "@/contexts/DonationContext"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "CVAuto - Automated Job Application Assistant",
+  title: "Coverly - Automated Job Application Assistant",
   description: "Automated job application assistant for South African job seekers",
     generator: 'v0.dev'
 }

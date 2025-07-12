@@ -47,7 +47,7 @@ export function MobileNavigation({ activeTab, onTabChange }: MobileNavigationPro
             <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mr-2">
               <span className="text-white font-bold text-sm">CV</span>
             </div>
-            CVAuto
+            Coverly
           </SheetTitle>
         </SheetHeader>
 

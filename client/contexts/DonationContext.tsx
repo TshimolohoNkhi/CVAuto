@@ -26,9 +26,9 @@ export function DonationProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (user) {
       // Load donation data from localStorage
-      const savedLastRequest = localStorage.getItem(`cvauto_last_donation_request_${user.id}`)
-      const savedTotalDonated = localStorage.getItem(`cvauto_total_donated_${user.id}`)
-      const savedDashboardEntry = localStorage.getItem(`cvauto_dashboard_entry_${user.id}`)
+      const savedLastRequest = localStorage.getItem(`coverly_last_donation_request_${user.id}`)
+      const savedTotalDonated = localStorage.getItem(`coverly_total_donated_${user.id}`)
+      const savedDashboardEntry = localStorage.getItem(`coverly_dashboard_entry_${user.id}`)
 
       if (savedLastRequest) {
         setLastDonationRequest(savedLastRequest)
@@ -42,7 +42,7 @@ export function DonationProvider({ children }: { children: React.ReactNode }) {
       if (!savedDashboardEntry) {
         const entryTime = new Date().toISOString()
         setDashboardEntryTime(entryTime)
-        localStorage.setItem(`cvauto_dashboard_entry_${user.id}`, entryTime)
+        localStorage.setItem(`coverly_dashboard_entry_${user.id}`, entryTime)
       } else {
         setDashboardEntryTime(savedDashboardEntry)
       }
@@ -73,7 +73,7 @@ export function DonationProvider({ children }: { children: React.ReactNode }) {
         setShowDonationPopup(true)
         const newRequestTime = new Date().toISOString()
         setLastDonationRequest(newRequestTime)
-        localStorage.setItem(`cvauto_last_donation_request_${user.id}`, newRequestTime)
+        localStorage.setItem(`coverly_last_donation_request_${user.id}`, newRequestTime)
       }
     }
 
@@ -99,7 +99,7 @@ export function DonationProvider({ children }: { children: React.ReactNode }) {
     setShowDonationPopup(false)
 
     if (user) {
-      localStorage.setItem(`cvauto_last_donation_request_${user.id}`, snoozeTimeString)
+      localStorage.setItem(`coverly_last_donation_request_${user.id}`, snoozeTimeString)
     }
   }
 
@@ -108,7 +108,7 @@ export function DonationProvider({ children }: { children: React.ReactNode }) {
     setTotalDonated(newTotal)
 
     if (user) {
-      localStorage.setItem(`cvauto_total_donated_${user.id}`, newTotal.toString())
+      localStorage.setItem(`coverly_total_donated_${user.id}`, newTotal.toString())
     }
   }
 
