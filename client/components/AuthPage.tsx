@@ -19,15 +19,16 @@ export function AuthPage() {
   const { login, signup, loading } = useAuth()
   const { toast } = useToast()
 
-  async function handleLogin(email: string, password: string) {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-  
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const { email, password } = loginData;
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
-      console.error('Login error:', error.message)
+      console.error('Login error:', error.message);
     } else {
-      console.log('User:', data.user)
+      console.log('User:', data.user);
     }
-  }
+  };
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
