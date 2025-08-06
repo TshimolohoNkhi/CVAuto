@@ -13,6 +13,7 @@ SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET")
 if SUPABASE_JWT_SECRET is None:
     raise RuntimeError("SUPABASE_JWT_SECRET environment variable is not set")
 
+# Call verify_token from auth.py in api/v1
 def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
     token = credentials.credentials
     try:
