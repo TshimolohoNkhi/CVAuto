@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 import logging
 
-from app.core.config import settings
+from app.config import settings
 from app.routes import router as routes
 
 # Configure logging
