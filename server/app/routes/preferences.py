@@ -27,6 +27,8 @@ async def save_preferences(request: Request, token_data=Depends(verify_token)):
     data = await request.json()
     user_id = token_data["sub"]
 
+    # Before encrypting the data and storing it in a dict, convert it to JSON and then proceed
+
     encrypted_preferences = {
         "id": user_id,
         "preferredLocations": encrypt_data(json.dumps(data.get("preferredLocations", []))),
