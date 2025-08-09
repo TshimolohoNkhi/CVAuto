@@ -24,7 +24,8 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
 
 @app.post("/server/save_preferences")
 async def save_preferences(request: Request, token_data=Depends(verify_token)):
-    data = await request.json()
+    data = await request.json() 
+    # flatten json file and embed with sentence-transformers
     user_id = token_data["sub"]
 
     encrypted_preferences = {
@@ -42,6 +43,8 @@ async def save_preferences(request: Request, token_data=Depends(verify_token)):
         "disabilityFriendly": encrypt_data(json.dumps(data.get("disabilityFriendly", False))),
         "remoteOnly": encrypt_data(json.dumps(data.get("remoteOnly", False))),
     }
+
+    # Store JSON and embedded vector in Supabase (same should be done for profile)
 
     # Insert into Supabase
     response = supabase.table("preferences").insert(encrypted_preferences).execute()
