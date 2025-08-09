@@ -1,7 +1,8 @@
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from utils.supabase_client import supabase
-from utils.encryption import encrypt_data
+from config.supabase_settings import supabase
+from config.security import encrypt_data
+from utils.conversions import Conversions
 import jwt
 import os
 import json
@@ -24,8 +25,35 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
 
 @app.post("/server/save_preferences")
 async def save_preferences(request: Request, token_data=Depends(verify_token)):
-    data = await request.json() 
-    # flatten json file and embed with sentence-transformers
+    #  Read the raw body of the request
+    raw_body = await request.body()
+    #  Decode the raw body
+    raw_json = raw_body.decode("utf-8")
+
+    #  Encrypt the raw JSON data
+    encrypted_raw_json = encrypt_data(raw_json)
+    # Save the encrypted raw JSON to the 'json_format' column along with user ID
+    try:
+        response = supabase.table("user_preferences").insert({
+            "id": token_data["sub"],
+            "json_format": encrypted_raw_json
+        }).execute()
+    except Exception as e:
+        print("Error saving 'encrypted_raw_json' to 'json_format':", e)
+        return {"status": "error", "detail": str(e)}
+    
+    prompt = Conversions().convert_preferences_to_prompt(raw_json)
+    encrypted_prompt = encrypt_data(prompt)
+
+    try:
+        response = supabase.table("user_preferences").update({
+            "prompt_format": encrypted_prompt
+        }).eq("id", token_data["sub"]).execute()
+    except Exception as e:
+        print("Error updating 'prompt_format' in 'user_preferences':", e)
+        return {"status": "error", "detail": str(e)}
+
+    data = await request.json()
     user_id = token_data["sub"]
 
     encrypted_preferences = {
