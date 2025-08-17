@@ -63,8 +63,15 @@ class Conversions:
 
         return prompt_template.format(PREFERENCES_JSON=json.dumps(user_data, indent=2))
 
-    def convert_to_vector(self, data):
+    def convert_prompt_to_vector(self, data):
         """
-        Convert the given data to a vector format (to be implemented).
+        Convert the given data to a vector format.
         """
-        pass
+        if isinstance(data, str):
+            prompt_data = data
+        else:
+            raise TypeError("Data must be a JSON string")
+
+        # Placeholder for actual vector conversion logic
+        # This should be replaced with the actual implementation
+        vector_embedding = json.dumps(prompt_data)

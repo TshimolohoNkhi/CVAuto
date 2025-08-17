@@ -1,38 +1,26 @@
-from fastapi import FastAPI, Request, HTTPException, Depends
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import FastAPI, Request, Depends
+from fastapi.security import HTTPBearer
 from config.supabase_settings import supabase
-from config.security import encrypt_data
+from config.security import Encryption
 from utils.conversions import Conversions
-import jwt
-import os
+from api.v1.auth import verify_token
 import json
 
 app = FastAPI()
 security = HTTPBearer()
-
-SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET")
-if SUPABASE_JWT_SECRET is None:
-    raise RuntimeError("SUPABASE_JWT_SECRET environment variable is not set")
-
-# Call verify_token from auth.py in api/v1
-def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    token = credentials.credentials
-    try:
-        payload = jwt.decode(token, str(SUPABASE_JWT_SECRET), algorithms=["HS256"])
-        return payload
-    except jwt.PyJWTError:
-        raise HTTPException(status_code=403, detail="Invalid token")
+encrypt_data = Encryption.encrypt_data
 
 @app.post("/server/save_preferences")
 async def save_preferences(request: Request, token_data=Depends(verify_token)):
-    #  Read the raw body of the request
-    raw_body = await request.body()
-    #  Decode the raw body
-    raw_json = raw_body.decode("utf-8")
 
-    #  Encrypt the raw JSON data
+    raw_body = await request.body()
+
+    raw_json = raw_body.decode("utf-8")
+    """
+    Encryptes the raw JSON data and saves it to the 'user_preferences' table.
+    """
     encrypted_raw_json = encrypt_data(raw_json)
-    # Save the encrypted raw JSON to the 'json_format' column along with user ID
+
     try:
         response = supabase.table("user_preferences").insert({
             "id": token_data["sub"],
@@ -42,6 +30,9 @@ async def save_preferences(request: Request, token_data=Depends(verify_token)):
         print("Error saving 'encrypted_raw_json' to 'json_format':", e)
         return {"status": "error", "detail": str(e)}
     
+    """
+    Converts the raw JSON data to a prompt format, encrypts the prompt format and saves it to the 'prompt_format' column.
+    """
     prompt = Conversions().convert_preferences_to_prompt(raw_json)
     encrypted_prompt = encrypt_data(prompt)
 
@@ -51,6 +42,20 @@ async def save_preferences(request: Request, token_data=Depends(verify_token)):
         }).eq("id", token_data["sub"]).execute()
     except Exception as e:
         print("Error updating 'prompt_format' in 'user_preferences':", e)
+        return {"status": "error", "detail": str(e)}
+
+    """
+    Coverts the prompt format into a vector embedding, encrypts the vector embedding and saves it to the 'vector_embedding' column.
+    """
+    vector_embedding = Conversions().convert_prompt_to_vector(prompt)
+    encrypted_vector_embedding = encrypt_data(vector_embedding)
+
+    try:
+        response = supabase.table("user_preferences").update({
+            "vector_embedding": encrypted_vector_embedding
+        }).eq("id", token_data["sub"]).execute()
+    except Exception as e:
+        print("Error updating 'vector_embedding' in 'user_preferences':", e)
         return {"status": "error", "detail": str(e)}
 
     data = await request.json()
