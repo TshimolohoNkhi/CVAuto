@@ -4,10 +4,17 @@
 # Return the results
 
 from config.supabase_settings import supabase
-from config.security import decrypt_data
+from config.security import Encryption
 from sentence_transformers import util
+from utils.conversions import Conversions
 
 supabase_client, SUPABASE_URL, SUPABASE_SERVICE_KEY = supabase()
+
+decrypt_data = Encryption().decrypt_data
+
+query_vector = Conversions().convert_profile_and_preferences
+# Pulls job vectors from db
+stored_vector = decrypt_data((supabase.table("jobs").select("vector_embedding").execute()))
 
 user_profile_response = (supabase.table("user_profile").select("vector_embedding").execute())
 user_preference_response = (supabase.table("user_preferences").select("vector_embedding").execute())

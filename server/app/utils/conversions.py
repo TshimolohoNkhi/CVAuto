@@ -73,3 +73,15 @@ class Conversions:
         print("Vector shape: ", vector_embedding.shape)
 
         return vector_embedding
+    
+    def convert_profile_and_preferences(self, profile_data, preferences_data):
+        """
+        Convert user profile and preferences to a combined prompt format.
+        """
+        profile_prompt = self.convert_profile_to_prompt(profile_data)
+        preferences_prompt = self.convert_preferences_to_prompt(preferences_data)
+
+        combined_prompt = f"This is the user: {profile_prompt}\n\n This is the user preference: {preferences_prompt}"
+
+        # Convert the combined prompt to a vector
+        
