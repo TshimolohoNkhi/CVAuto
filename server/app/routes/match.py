@@ -2,3 +2,18 @@
 # Decrypt vectors
 # Call function to perform cosine similarity
 # Return the results
+
+from config.supabase_settings import supabase
+from config.security import decrypt_data
+from sentence_transformers import util
+
+supabase_client, SUPABASE_URL, SUPABASE_SERVICE_KEY = supabase()
+
+user_profile_response = (supabase.table("user_profile").select("vector_embedding").execute())
+user_preference_response = (supabase.table("user_preferences").select("vector_embedding").execute())
+
+best_matches = []
+
+for user_profile in user_profile_response.data:
+    decrypted_vector = decrypt_data(user_profile_response['vector_embedding'])
+    sim = util.cos_sim(query_vector, stored_vector)
