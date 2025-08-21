@@ -1,1 +1,4 @@
-# Functionality to initiate finding a match using cosine simmilarity
+# Pull vectors from db
+# Decrypt vectors
+# Call function to perform cosine similarity
+# Return the results

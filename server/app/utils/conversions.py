@@ -1,17 +1,11 @@
-# add functionality to convert to json file
-# create embedded_vector column in each table
-# generate vector embeddings
-# store in Supabase
-# add job + candidate matching functionality
-
 import json
-import os
 
 class Utilities:
     def __init__(self) -> None:
         pass
 
     def load_prompt(self, prompt_name: str) -> str:
+        import os
         """
         Load prompts from prompts directory.
         """
@@ -64,6 +58,7 @@ class Conversions:
         return prompt_template.format(PREFERENCES_JSON=json.dumps(user_data, indent=2))
 
     def convert_prompt_to_vector(self, data):
+        from sentence_transformers import SentenceTransformer
         """
         Convert the given data to a vector format.
         """
@@ -72,6 +67,9 @@ class Conversions:
         else:
             raise TypeError("Data must be a JSON string")
 
-        # Placeholder for actual vector conversion logic
-        # This should be replaced with the actual implementation
-        vector_embedding = json.dumps(prompt_data)
+        model = SentenceTransformer("all-MiniLM-L6-v2")
+
+        vector_embedding = model.encode(prompt_data, convert_to_numpy=True)
+        print("Vector shape: ", vector_embedding.shape)
+
+        return vector_embedding

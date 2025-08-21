@@ -17,7 +17,7 @@ async def save_preferences(request: Request, token_data=Depends(verify_token)):
 
     raw_json = raw_body.decode("utf-8")
     """
-    Encryptes the raw JSON data and saves it to the 'user_preferences' table.
+    Encrypts the raw JSON data and saves it to the 'user_preferences' table.
     """
     encrypted_raw_json = encrypt_data(raw_json)
 
@@ -48,7 +48,7 @@ async def save_preferences(request: Request, token_data=Depends(verify_token)):
     Coverts the prompt format into a vector embedding, encrypts the vector embedding and saves it to the 'vector_embedding' column.
     """
     vector_embedding = Conversions().convert_prompt_to_vector(prompt)
-    encrypted_vector_embedding = encrypt_data(vector_embedding)
+    encrypted_vector_embedding = encrypt_data(vector_embedding.tolist())
 
     try:
         response = supabase.table("user_preferences").update({
@@ -61,8 +61,7 @@ async def save_preferences(request: Request, token_data=Depends(verify_token)):
     data = await request.json()
     user_id = token_data["sub"]
 
-    # Before encrypting the data and storing it in a dict, convert it to JSON and then proceed
-
+    # You may need to expand on this
     encrypted_preferences = {
         "id": user_id,
         "preferredLocations": encrypt_data(json.dumps(data.get("preferredLocations", []))),
@@ -78,8 +77,6 @@ async def save_preferences(request: Request, token_data=Depends(verify_token)):
         "disabilityFriendly": encrypt_data(json.dumps(data.get("disabilityFriendly", False))),
         "remoteOnly": encrypt_data(json.dumps(data.get("remoteOnly", False))),
     }
-
-    # Store JSON and embedded vector in Supabase (same should be done for profile)
 
     # Insert into Supabase
     response = supabase.table("preferences").insert(encrypted_preferences).execute()
