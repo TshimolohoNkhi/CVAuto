@@ -1,3 +1,4 @@
+from sentence_transformers import SentenceTransformer
 import json
 
 class Utilities:
@@ -58,7 +59,6 @@ class Conversions:
         return prompt_template.format(PREFERENCES_JSON=json.dumps(user_data, indent=2))
 
     def convert_prompt_to_vector(self, data):
-        from sentence_transformers import SentenceTransformer
         """
         Convert the given data to a vector format.
         """
@@ -83,5 +83,17 @@ class Conversions:
 
         combined_prompt = f"This is the user: {profile_prompt}\n\n This is the user preference: {preferences_prompt}"
 
-        # Convert the combined prompt to a vector
+        """
+        Convert the combined prompt to a vector format.
+        """
+        if isinstance(combined_prompt, str):
+            prompt_data = combined_prompt
+        else:
+            raise TypeError("Data must be a JSON string")
         
+        model = SentenceTransformer("all-MiniLM-L6-v2")
+
+        vector_embedding = model.encode(prompt_data, convert_to_numpy=True)
+
+        return vector_embedding
+
