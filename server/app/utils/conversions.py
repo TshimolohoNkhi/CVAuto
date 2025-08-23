@@ -40,6 +40,8 @@ class Conversions:
 
         return prompt_template.format(PROFILE_JSON=json.dumps(user_data, indent=2))
     
+        # call LLM to convert profile to prompt
+    
     def convert_preferences_to_prompt(self, data):
         """
         Convert the given data (JSON string or dict) to a prompt format.
@@ -57,6 +59,8 @@ class Conversions:
             raise ValueError("Prompt template missing {PREFERENCES_JSON} placeholder.")
 
         return prompt_template.format(PREFERENCES_JSON=json.dumps(user_data, indent=2))
+    
+        # call LLM to convert preferences to prompt
 
     def convert_prompt_to_vector(self, data):
         """
@@ -74,6 +78,8 @@ class Conversions:
 
         return vector_embedding
     
+        # call LLM to convert prompt to vector
+    
     def convert_profile_and_preferences(self, profile_data, preferences_data):
         """
         Convert user profile and preferences to a combined prompt format.
@@ -81,7 +87,7 @@ class Conversions:
         profile_prompt = self.convert_profile_to_prompt(profile_data)
         preferences_prompt = self.convert_preferences_to_prompt(preferences_data)
 
-        combined_prompt = f"This is the user: {profile_prompt}\n\n This is the user preference: {preferences_prompt}"
+        combined_prompt = f"This is the candidate: {profile_prompt}\n\n This is the candidate preference: {preferences_prompt}"
 
         """
         Convert the combined prompt to a vector format.

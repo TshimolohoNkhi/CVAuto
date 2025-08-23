@@ -22,8 +22,8 @@ user_preference_response = (supabase.table("user_preferences").select("vector_em
 best_matches = []
 # Use Supabase instead of a list to store the matches
 
-stored_prompt = decrypt_data((supabase.table("jobs").select("json_format").eq("id", stored_vector['id']).execute()))
-query_prompt = decrypt_data((supabase.table("user_profile").select("json_format").eq("id", user_profile_response['id']).execute()))
+stored_json = decrypt_data((supabase.table("jobs").select("json_format").eq("id", stored_vector['id']).execute()))
+query_json = decrypt_data((supabase.table("user_profile").select("json_format").eq("id", user_profile_response['id']).execute()))
 
 for user_profile in user_profile_response.data:
     decrypted_vector = decrypt_data(user_profile_response['vector_embedding'])
@@ -37,7 +37,7 @@ for user_profile in user_profile_response.data:
                 "user_id": user_profile['id'],
                 "job_id": stored_vector['id'],
                 "match_score": sim.item(),
-                "reasons": ExceptionGroup().generate_reasons(stored_prompt, query_prompt)
+                "reasons": ExceptionGroup().generate_reasons(stored_json, query_json)
                 # Generate reasons based on the match
             }).execute()
         except Exception as e:
