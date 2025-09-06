@@ -1,9 +1,30 @@
 from sentence_transformers import SentenceTransformer
-import json
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+from langchain.llms import HuggingFacePipeline
+from langchain import PromptTemplate, LLMChain
+import torch, json
 
 class Utilities:
     def __init__(self) -> None:
-        pass
+        model_id = "openlm-research/open_llama_7b"
+        tokenizer = AutoTokenizer.from_pretrained(model_id)
+
+        model = AutoModelForCausalLM.from_pretrained(
+            model_id,
+            torch_dtype=torch.float16,
+            device_map="auto"
+        )
+
+        pipe = pipeline(
+            "text-generation",
+            model=model,
+            tokenizer=tokenizer,
+            max_new_tokens=256,
+            temperature=0.3,
+            top_p=0.9
+        )
+
+        self.llm = HuggingFacePipeline(pipeline=pipe)
 
     def load_prompt(self, prompt_name: str) -> str:
         import os
@@ -24,7 +45,7 @@ class Conversions:
 
     def convert_profile_to_prompt(self, data):
         """
-        Convert the given data (JSON string or dict) to a prompt format.
+        Convert data (JSON string or dict) to a prompt format.
         """
         if isinstance(data, str):
             user_data = json.loads(data)
@@ -37,10 +58,18 @@ class Conversions:
 
         if "{PROFILE_JSON}" not in prompt_template:
             raise ValueError("Prompt template missing {PROFILE_JSON} placeholder.")
+        
+        populate_placeholder = prompt_template.format(
+            PROFILE_JSON=json.dumps(user_data, indent=2)
+        )
 
-        return prompt_template.format(PROFILE_JSON=json.dumps(user_data, indent=2))
-    
-        # call LLM to convert profile to prompt
+        prompt = PromptTemplate(template=populate_placeholder, input_variables=[])
+
+        chain = LLMChain(llm=self.llm, prompt=prompt)
+
+        result = chain.run()
+
+        return result
     
     def convert_preferences_to_prompt(self, data):
         """
@@ -58,9 +87,17 @@ class Conversions:
         if "{PREFERENCES_JSON}" not in prompt_template:
             raise ValueError("Prompt template missing {PREFERENCES_JSON} placeholder.")
 
-        return prompt_template.format(PREFERENCES_JSON=json.dumps(user_data, indent=2))
-    
-        # call LLM to convert preferences to prompt
+        populate_placeholder = prompt_template.format(
+            PREFERENCES_JSON=json.dumps(user_data, indent=2)
+        )
+
+        prompt = PromptTemplate(template=populate_placeholder, input_variables=[])
+
+        chain = LLMChain(llm=self.llm, prompt=prompt)
+
+        result = chain.run()
+
+        return result
 
     def convert_prompt_to_vector(self, data):
         """
@@ -77,8 +114,6 @@ class Conversions:
         print("Vector shape: ", vector_embedding.shape)
 
         return vector_embedding
-    
-        # call LLM to convert prompt to vector
     
     def convert_profile_and_preferences(self, profile_data, preferences_data):
         """

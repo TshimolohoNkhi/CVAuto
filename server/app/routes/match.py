@@ -1,13 +1,7 @@
-# Pull vectors from db - done
-# Decrypt vectors - done
-# Call function to perform cosine similarity - done
-# Return the results
-
 from config.supabase_settings import supabase
 from config.security import Encryption
 from sentence_transformers import util
 from utils.conversions import Conversions
-from utils.similarity_reasoning import ExtractReasoning
 
 supabase_client, SUPABASE_URL, SUPABASE_SERVICE_KEY = supabase()
 
@@ -36,9 +30,7 @@ for user_profile in user_profile_response.data:
             response = supabase.table("matched").insert({
                 "user_id": user_profile['id'],
                 "job_id": stored_vector['id'],
-                "match_score": sim.item(),
-                "reasons": ExceptionGroup().generate_reasons(stored_json, query_json)
-                # Generate reasons based on the match
+                "match_score": sim.item()
             }).execute()
         except Exception as e:
             print("Error saving match to 'matches' table:", e)
