@@ -1,8 +1,9 @@
 from fastapi import APIRouter
-from app.routes.start import router as start_router
+from app.routes.profile import router as profile_router
+from app.routes.preferences import router as preferences_router
 
 router = APIRouter()
 
-# Register all route files here
-router.include_router(start_router)
-
+# Register routers with prefixes
+router.include_router(profile_router, prefix="/save_profile")
+router.include_router(preferences_router, prefix="/save_preferences")

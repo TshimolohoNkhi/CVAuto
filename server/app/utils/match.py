@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-"""This sets the stage for what will be needed for the functionality of this file, almost like prep"""
->>>>>>> 3a253040c2df9c9a68c4ec74fbb09e255cc17ead
 from config.supabase_settings import supabase
 from config.security import Encryption
 from sentence_transformers import util
@@ -25,10 +21,7 @@ user_profile_response = (supabase.table("user_profile").select("vector_embedding
 # This pulls the stored vector embedding version of the user prefrences from the table in the database
 user_preference_response = (supabase.table("user_preferences").select("vector_embedding").execute())
 
-best_matches = []
-# Use Supabase instead of a list to store the matches
-
-
+preference_job_matches = []
 # You need to match the preferences to the job and then match the matched results to the profile
 
 # Preferences
@@ -51,8 +44,6 @@ for user_profile in user_profile_response.data:
     sim = util.cos_sim(query_vector, stored_vector)
 
     if sim >= 0.8:
-        best_matches.append((user_profile, sim.item()))
-        
         try:
             response = supabase.table("matched").insert({
                 "user_id": user_profile['id'],
@@ -65,4 +56,3 @@ for user_profile in user_profile_response.data:
         print(f"Match found with similarity {sim.item()}")
     else:
         continue
-    
