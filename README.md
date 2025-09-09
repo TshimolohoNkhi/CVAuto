@@ -27,6 +27,7 @@ This is a personal portfolio project demonstrating applied AI/ML, NLP, and backe
 
 ## 🏗️ CVAuto Project Structure
 
+```
 CVAuto/
 ├── client/
 │ ├── app/
@@ -62,7 +63,7 @@ CVAuto/
 │ │ └── utils/ # Utility functions
 │ └── docs/ # Documentation
 └── README.md
-
+```
 ---
 
 ## 📊 Matching Workflow
