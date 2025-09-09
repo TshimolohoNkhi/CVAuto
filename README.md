@@ -78,7 +78,8 @@ CVAuto/
 
 ## 🖼️ Screenshots
 
-<img width="2523" height="1324" alt="image" src="https://github.com/user-attachments/assets/a17644f1-1a69-413c-89df-c82dd723dad9" />
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/963ae402-9526-48df-b3b8-3d8e216cb4db" />
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/e6f26da4-b57f-4421-8be7-6f10e51dba7f" />
 
 ---
 
