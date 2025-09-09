@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Request, Depends
 from fastapi.security import HTTPBearer
-from config.supabase_settings import supabase
-from config.security import Encryption
-from utils.conversions import Conversions
-from api.v1.auth import verify_token
+from ..config.supabase_settings import supabase
+from ..config.security import Encryption
+from ..utils.conversions import Conversions
+from ..api.v1.auth import verify_token
 import json
 
 app = FastAPI()

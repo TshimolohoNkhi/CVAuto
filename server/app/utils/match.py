@@ -1,9 +1,7 @@
-"""This sets the stage for what will be needed for the functionality of this file, almost like prep"""
 from config.supabase_settings import supabase
 from config.security import Encryption
 from sentence_transformers import util
 from utils.conversions import Conversions
-from utils.similarity_reasoning import ExtractReasoning
 
 # Initialises the supabase client
 supabase_client, SUPABASE_URL, SUPABASE_SERVICE_KEY = supabase()
@@ -23,10 +21,7 @@ user_profile_response = (supabase.table("user_profile").select("vector_embedding
 # This pulls the stored vector embedding version of the user prefrences from the table in the database
 user_preference_response = (supabase.table("user_preferences").select("vector_embedding").execute())
 
-best_matches = []
-# Use Supabase instead of a list to store the matches
-
-
+preference_job_matches = []
 # You need to match the preferences to the job and then match the matched results to the profile
 
 # Preferences
@@ -49,15 +44,11 @@ for user_profile in user_profile_response.data:
     sim = util.cos_sim(query_vector, stored_vector)
 
     if sim >= 0.8:
-        best_matches.append((user_profile, sim.item()))
-        
         try:
             response = supabase.table("matched").insert({
                 "user_id": user_profile['id'],
                 "job_id": stored_vector['id'],
-                "match_score": sim.item(),
-                "reasons": ExceptionGroup().generate_reasons(stored_json, query_json)
-                # Generate reasons based on the match
+                "match_score": sim.item()
             }).execute()
         except Exception as e:
             print("Error saving match to 'matches' table:", e)
@@ -65,4 +56,3 @@ for user_profile in user_profile_response.data:
         print(f"Match found with similarity {sim.item()}")
     else:
         continue
-    
