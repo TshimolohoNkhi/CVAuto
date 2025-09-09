@@ -1,3 +1,111 @@
 # CVAuto - Automated CV Application Platform 📄
 
-An intelligent platform that automates the job application process for job seekers by leveraging AI-powered matching, personalized cover letter generation, and automated application submission. The system focuses on streamlining the job search experience in competitive markets across multiple industries. 💼 Portfolio Project This is a personal portfolio project demonstrating advanced web development skills, API integration, and AI-driven automation. The project showcases: Full-Stack Development: Complete application with modern frontend and backend architectures AI Integration: Graph-based job matching algorithms and natural language processing Database Design: Efficient data modeling for users, jobs, and applications API Development: RESTful APIs with FastAPI and real-time data processing User Experience: Intuitive dashboard with comprehensive application tracking Authentication & Security: Secure user management with Supabase Auth Scalability: Modular architecture supporting multiple users and job sources 🚀 Key Features Profile Management Comprehensive profile setup with skills, experience, and preferences AI-Powered Job Matching: Advanced matching using graph algorithms and similarity scoring Automated Application Submission: One-click application with generated cover letters Credit-Based System: Manage application credits with flexible pricing tiers Recruiter Portal: Post jobs and review applications in real-time Dashboard Analytics: Track application success rates and job match quality Email Integration: Automated notifications for application status updates Multi-Platform Support: Responsive design for desktop and mobile devices Risk Management Credit Validation: Ensure sufficient credits before application submission Duplicate Prevention: Avoid duplicate applications to same job Timeout Protection: Handle API failures and rate limiting gracefully Market Analysis Job Market Trends: Analyze application success rates by industry Sentiment Analysis: Optional integration for job description analysis Technical Indicators: Track application metrics and conversion rates Recruiter Tools Bulk Job Posting: Efficient job management for recruiters Application Filtering: Advanced filtering and sorting of candidates Feedback System: Rating and feedback for matched applications 📊 Application Specifications Parameter Value Description Starting Credits 10 Free credits for new users Credit Cost 1 credit per application Maximum applications per day 50 Daily application limit Subscription Plans Basic/Free, Pro ($9.99/month), Enterprise ($29.99/month) Match Threshold 70% Minimum similarity score for job matching Cover Letter Length 300-500 words Optimized length for ATS systems Email Templates 5+ Customizable email templates for applications 🏗️ Project Structure CVAuto/ ├── client/ │   ├── app/ │   │   ├── globals.css │   │   ├── layout.tsx │   │   └── page.tsx │   ├── components/ │   │   ├── ui/ # Reusable UI components │   │   ├── Dashboard.tsx │   │   ├── ApplicationsDashboard.tsx │   │   ├── CvTemplates.tsx │   │   ├── AuthPage.tsx │   │   └── ... │   ├── contexts/ # React contexts for state management │   ├── hooks/ # Custom React hooks │   ├── lib/ # Utility functions and Supabase client │   └── public/ # Static assets ├── server/ │   ├── app/ │   │   ├── main.py # FastAPI application entry point │   │   ├── api/v1/ # API endpoints │   │   │   ├── applications.py │   │   │   ├── auth.py │   │   │   ├── dashboard.py │   │   │   ├── jobseekers.py │   │   │   ├── payments.py │   │   │   └── recruiters.py │   │   ├── config/ # Configuration files │   │   ├── core/ # Core business logic │   │   ├── db/ # Database session management │   │   ├── graph/ # Job matching graph algorithms │   │   ├── models/ # SQLAlchemy models │   │   ├── prompts/ # AI prompts for matching │   │   ├── routes/ # Additional routes │   │   ├── schemas/ # Pydantic schemas │   │   ├── services/ # Business logic services │   │   └── utils/ # Utility functions │   ├── docs/ # Documentation │   └── scripts/ # Utility scripts └── README.md # Project documentation 💰 Supported Features The platform supports comprehensive job application automation across multiple categories: Core Features: Profile Management, Job Matching, Application Submission, Credit System Advanced Features: Cover Letter Generation, Email Templates, Analytics Dashboard Integration Features: Supabase Auth, Payment Processing, Email Notifications User Management: Onboarding Flow, Preferences Setup, Notification Center 🎯 Application Logic Flow User Registration: Create account and complete onboarding Profile Setup: Input skills, experience, and job preferences Credit Purchase: Add credits via integrated payment system Job Matching: AI analyzes profile against available jobs Application Generation: System creates personalized cover letter and application Email Submission: Automated submission to job posting Application Tracking: Real-time status updates and analytics Credit Deduction: Automatic credit charging upon successful submission 📈 Performance Monitoring The platform provides comprehensive performance tracking through: Application Metrics: Success rates, match quality scores, and conversion analytics Credit Usage Tracking: Monitor credit consumption and renewal patterns User Engagement: Track user activity and feature utilization Error Logging: Comprehensive logging for debugging and optimization Email Delivery: Monitor email success rates and bounce handling 🛠️ Technical Implementation Technologies Used Frontend: Next.js 15, TypeScript, Tailwind CSS, Radix UI Components Backend: FastAPI, Python 3.7+, SQLAlchemy, Pydantic Database: Supabase (PostgreSQL with real-time capabilities) Authentication: Supabase Auth with JWT tokens Payment Processing: Integrated payment gateway for credit purchases Email Service: SMTP integration for automated notifications AI/ML: Custom graph algorithms for job matching and similarity scoring Key Algorithms Job Matching Algorithm: Graph-based similarity scoring using profile and job data Cover Letter Generation: NLP-based template filling with user-specific content Credit Calculation: Dynamic pricing based on application volume and success rates Duplicate Detection: Hash-based comparison to prevent duplicate applications 📝 Project Notes This project demonstrates proficiency in: Modern Web Development: Full-stack application with latest technologies API Design: RESTful API development with comprehensive documentation Database Architecture: Efficient data modeling and query optimization User Experience Design: Intuitive interface with responsive design Security Best Practices: Secure authentication and data protection Scalability Considerations: Modular architecture for future enhancements AI Integration: Custom algorithms for intelligent job matching and automation
+A platform that matches job seekers with recruiters by analysing user profiles and job descriptions. CVAuto leverages LLMs, cosine similarity, and a prompt-to-vector pipeline to deliver highly relevant candidate-job matches.  
+
+💼 **Portfolio Project**  
+This is a personal portfolio project demonstrating applied AI/ML, NLP, and backend development skills. The project showcases:
+
+- **Artificial Intelligence**: LLMs transform unstructured user profile and job description data into structured embeddings.  
+- **Information Retrieval**: Cosine similarity for candidate-job matching.  
+- **NLP Engineering**: Prompt engineering pipeline for converting raw data into semantic vectors.  
+- **Software Architecture**: Modular, scalable backend design with clear separation of concerns.  
+- **Data Science**: Candidate-job vectorisation, scoring, and match ranking.  
+
+---
+
+## 🚀 Key Features  
+
+**Job Matching**  
+- **Cosine Similarity**: Ranks candidates by measuring semantic similarity between profile vectors and job description vectors.  
+- **Vectorised Pipeline**: LLM-driven embeddings convert raw text into structured vectors for precise matching.  
+- **Top-N Recommendations**: Ranks jobs or candidates by similarity score to provide the most relevant matches.  
+
+**Recruiter Tools**  
+- **Automated Candidate Matching**: Sends recruiters the suitable candidates for their open roles.   
+
+---
+
+## 🏗️ CVAuto Project Structure
+
+CVAuto/
+├── client/
+│ ├── app/
+│ │ ├── globals.css
+│ │ ├── layout.tsx
+│ │ └── page.tsx
+│ ├── components/ # Reusable UI components
+│ │ ├── ui/
+│ │ ├── Dashboard.tsx
+│ │ ├── ApplicationsDashboard.tsx
+│ │ ├── AuthPage.tsx
+│ │ └── ...
+│ ├── contexts/ # React contexts for state management
+│ ├── hooks/ # Custom React hooks
+│ ├── lib/ # Utilities & Supabase client
+│ └── public/ # Static assets
+
+├── server/
+│ ├── app/
+│ │ ├── main.py # FastAPI entry point
+│ │ ├── api/v1/ # API endpoints
+│ │ │ ├── applications.py
+│ │ │ ├── auth.py
+│ │ │ └── dashboard.py
+│ │ ├── config/ # Configuration files
+│ │ ├── core/ # Core business logic
+│ │ ├── db/ # Database session management
+│ │ ├── models/ # SQLAlchemy models
+│ │ ├── prompts/ # AI prompts for matching
+│ │ ├── routes/ # Additional routes
+│ │ ├── schemas/ # Pydantic schemas
+│ │ ├── services/ # Business logic services
+│ │ └── utils/ # Utility functions
+│ └── docs/ # Documentation
+└── README.md
+
+---
+
+## 📊 Matching Workflow
+
+1. **Data Input**: Candidate submits profile data; recruiter posts job description. Data stored in Supabase.  
+2. **Preprocessing**: Cleans and standardises profile data and job descriptions.  
+3. **Vectorisation**: LLM-based pipeline transforms text into semantic embeddings.  
+4. **Similarity Calculation**: Cosine similarity ranks candidates for each job.  
+5. **Results Delivery**: Recruiters receive top candidates via dashboard; candidates get feedback.  
+
+---
+
+## 🖼️ Diagrams & Screenshots
+
+Placeholder section for system architecture diagrams, sequence flows, and UI screenshots.
+
+---
+
+## 🛠️ Technical Implementation
+
+**Technologies Used**  
+- Python 3.12+  
+- FastAPI (Backend/API)  
+- LangChain / SBERT / HuggingFace (LLM processing)  
+- Scikit-learn / FAISS (Vector similarity search)  
+- Pandas / NumPy (Data handling)  
+
+**Core Algorithms**  
+- **Cosine Similarity**: Primary scoring mechanism for matching candidates to jobs.  
+- **LLM-Prompt Pipelines**: Converts unstructured user/job data into structured embeddings.  
+
+---
+
+## 📝 Project Notes
+
+This project demonstrates proficiency in:  
+- **Applied AI & NLP**: Text embeddings, semantic similarity, prompt engineering.  
+- **Backend Development**: FastAPI endpoints, modular service design.  
+- **Information Retrieval**: Efficient ranking and scoring for candidate-job matches.  
+
+---
+
+## 🔮 Next Steps
+
+- Implement recruiter dashboard with analytics, filtering, and candidate notifications.  
+- Implement real-time matching updates and automated alerting.  
