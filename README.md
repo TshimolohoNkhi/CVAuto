@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 # CVAuto - Automated CV Application Platform 📄
 
 A platform that matches job seekers with recruiters by analysing user profiles and job descriptions. CVAuto leverages LLMs, cosine similarity, and a prompt-to-vector pipeline to deliver highly relevant candidate-job matches.  
@@ -109,6 +108,7 @@ This project demonstrates proficiency in:
 
 ## 🔮 Next Steps
 
+- Improve frontend, fix routing, and clean up file architecture.  
 - Implement recruiter dashboard with analytics, filtering, and candidate notifications.  
 - Implement real-time matching updates and automated alerting.  
 =====
